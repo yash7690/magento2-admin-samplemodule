@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>        	                                
+        <add id="MyVendor_AdminSampleModule::root_menu" 
+            title="My Vendor" 
+            module="MyVendor_AdminSampleModule" 
+            sortOrder="45" 
+            resource="MyVendor_AdminSampleModule::root_menu" />
+        
+        <add id="MyVendor_AdminSampleModule::manage_items" 
+            title="Manage Items"
+            module="MyVendor_AdminSampleModule" 
+            sortOrder="10"
+            action="adminsamplemodule/items/index" 
+            parent="MyVendor_AdminSampleModule::root_menu" 
+            resource="MyVendor_AdminSampleModule::manage_items" />
+
+        <add id="MyVendor_AdminSampleModule::manage_items_dependsonconfig" 
+            dependsOnConfig="sampleadminmodule/general/enable"
+            title="Manage Items (Dependent Field)"
+            module="MyVendor_AdminSampleModule" 
+            sortOrder="10"
+            action="adminsamplemodule/items/index" 
+            parent="MyVendor_AdminSampleModule::root_menu" 
+            resource="MyVendor_AdminSampleModule::manage_items" />
+        
+        <add id="MyVendor_AdminSampleModule::configuration" 
+            title="Configuration" 
+            module="MyVendor_AdminSampleModule" 
+            sortOrder="99" 
+            parent="MyVendor_AdminSampleModule::root_menu" 
+            action="adminhtml/system_config/edit/section/sampleadminmodule" 
+            resource="MyVendor_AdminSampleModule::configuration" />
+    </menu>
+</config>
