@@ -1,125 +1,96 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">myvendor_adminsamplemodule_items_listing.myvendor_adminsamplemodule_items_listing_data_source</item>
-            <item name="deps" xsi:type="string">myvendor_adminsamplemodule_items_listing.myvendor_adminsamplemodule_items_listing_data_source</item>
-        </item>
-        <item name="spinner" xsi:type="string">spinner_columns</item>
-        <item name="buttons" xsi:type="array">
-            <item name="add" xsi:type="array">
-                <item name="name" xsi:type="string">add</item>
-                <item name="label" xsi:type="string" translate="true">Add New Item</item>
-                <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">*/*/new</item>
-            </item>
         </item>
     </argument>
-    <dataSource name="myvendor_adminsamplemodule_items_listing_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
-            <argument name="name" xsi:type="string">myvendor_adminsamplemodule_items_listing_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">item_id</argument>
-            <argument name="requestFieldName" xsi:type="string">id</argument>
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
-                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="indexField" xsi:type="string">item_id</item>
-                    </item>
-                </item>
-            </argument>
-        </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add New Page</label>
+            </button>
+        </buttons>
+        <spinner>spinner_columns</spinner>
+        <deps>
+            <dep>myvendor_adminsamplemodule_items_listing.myvendor_adminsamplemodule_items_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="myvendor_adminsamplemodule_items_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">item_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>MyVendor_AdminSampleModule::manage_items</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="myvendor_adminsamplemodule_items_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>item_id</primaryFieldName>
+            </settings>
+        </dataProvider>
     </dataSource>
-
     <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
-        <filters name="listing_filters" />
-        <paging name="listing_paging"/>
-
+        <filters name="listing_filters"/>
         <massaction name="listing_massaction">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
-                </item>
-            </argument>
-            <action name="enable">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="type" xsi:type="string">enable</item>
-                        <item name="label" xsi:type="string" translate="true">Enable</item>
-                        <item name="url" xsi:type="url" path="adminsamplemodule/items/massEnable"/>
-                        <item name="confirm" xsi:type="array">
-                            <item name="title" xsi:type="string" translate="true">Enable Item</item>
-                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to enable selected items?</item>
-                        </item>
-                    </item>
-                </argument>
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="adminsamplemodule/items/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
             </action>
             <action name="disable">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="type" xsi:type="string">disable</item>
-                        <item name="label" xsi:type="string" translate="true">Disable</item>
-                        <item name="url" xsi:type="url" path="adminsamplemodule/items/massDisable"/>
-                        <item name="confirm" xsi:type="array">
-                            <item name="title" xsi:type="string" translate="true">Disable Item</item>
-                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to disable selected items?</item>
-                        </item>
-                    </item>
-                </argument>
+                <settings>
+                    <url path="adminsamplemodule/items/massDisable"/>
+                    <type>disable</type>
+                    <label translate="true">Disable</label>
+                </settings>
             </action>
-            <action name="delete">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="type" xsi:type="string">delete</item>
-                        <item name="label" xsi:type="string" translate="true">Delete</item>
-                        <item name="url" xsi:type="url" path="adminsamplemodule/items/massDelete"/>
-                        <item name="confirm" xsi:type="array">
-                            <item name="title" xsi:type="string" translate="true">Delete Item</item>
-                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to delete selected items?</item>
-                        </item>
-                    </item>
-                </argument>
+            <action name="enable">
+                <settings>
+                    <url path="adminsamplemodule/items/massEnable"/>
+                    <type>enable</type>
+                    <label translate="true">Enable</label>
+                </settings>
             </action>
         </massaction>
+        <paging name="listing_paging"/>
     </listingToolbar>
-
     <columns name="spinner_columns">
         <selectionsColumn name="ids">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
-                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
-                    <item name="indexField" xsi:type="string">item_id</item>
-                </item>
-            </argument>
+            <settings>
+                <indexField>item_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>55</resizeDefaultWidth>
+            </settings>
         </selectionsColumn>
         <column name="item_id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">ID</item>
-                </item>
-            </argument>
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
         </column>
         <column name="title">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Title</item>
-                </item>
-            </argument>
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Title</label>
+            </settings>
         </column>
         <column name="status" component="Magento_Ui/js/grid/columns/select">
             <settings>
@@ -129,32 +100,24 @@
                 <label translate="true">Status</label>
             </settings>
         </column>
-        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">dateRange</item>
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
-                    <item name="dataType" xsi:type="string">date</item>
-                    <item name="label" xsi:type="string" translate="true">Created</item>
-                </item>
-            </argument>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created</label>
+            </settings>
         </column>
-        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">dateRange</item>
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
-                    <item name="dataType" xsi:type="string">date</item>
-                    <item name="label" xsi:type="string" translate="true">Modified</item>
-                </item>
-            </argument>
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Modified</label>
+            </settings>
         </column>
         <actionsColumn name="actions" class="MyVendor\AdminSampleModule\Ui\Component\Listing\Column\ItemsActions">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="indexField" xsi:type="string">item_id</item>
-                </item>
-            </argument>
+            <settings>
+                <indexField>item_id</indexField>
+            </settings>
         </actionsColumn>
     </columns>
 </listing>
